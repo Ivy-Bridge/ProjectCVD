@@ -25,28 +25,43 @@ public class ScrollCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    }
+		iTween.MoveTo(fieldCtrl, iTween.Hash("y", -deltaValue.y, "EaseType", "linear"));
+	}
 
     IEnumerator coScrollField()
     {
         bool enableMove = false;
+		bool enableMoveTo = false;
 
         while(true)
         {
             //iTween.MoveBy(gameObject, iTween.Hash("x", 2, "easeType", "easeInOutExpo", "loopType", "pingPong", "delay", .1));
 
-            if (Input.mouseScrollDelta.y != 0)
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 enableMove = true;
+				enableMoveTo = true;
+				tapPos = Input.mousePosition;
             }
-            else
-                enableMove = false;
+            else if(Input.GetKeyUp(KeyCode.Mouse0))
+			{
+				enableMove = false;
+			}
 
             if(enableMove)
-                iTween.MoveTo(fieldCtrl, iTween.Hash("y", fieldCtrl.transform.position.y + Input.mouseScrollDelta.y, "delay", 0.1f));
+			{
+				dragPos = Input.mousePosition;
+				deltaValue = tapPos - dragPos;
+				deltaValue = deltaValue * 0.01f;
+			}
+
+			if(enableMoveTo)
+			{
+				enableMoveTo = false;
+			}
+				
             //fieldCtrl.transform.SetPositionAndRotation(new Vector3(fieldCtrl.transform.position.x, fieldCtrl.transform.position.y + Input.mouseScrollDelta.y, fieldCtrl.transform.position.z), fieldCtrl.transform.rotation);
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
     }
 }

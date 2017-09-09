@@ -60,9 +60,9 @@ public class InGameMgr : MonoBehaviour {
 
         // 중간 완충지대 1개 로딩
         if(_fieldInfo.castle.floor %2 == 0)
-            floor[_fieldInfo.castle.floor] = Instantiate(Resources.Load("Prefab/g_center_right")) as GameObject;
-        else
             floor[_fieldInfo.castle.floor] = Instantiate(Resources.Load("Prefab/g_center_left")) as GameObject;
+        else
+            floor[_fieldInfo.castle.floor] = Instantiate(Resources.Load("Prefab/g_center_right")) as GameObject;
 
         floor[_fieldInfo.castle.floor].transform.parent = _fieldManager.transform;
         floor[_fieldInfo.castle.floor].transform.position = floor[0].transform.Find("genPos").transform.localPosition - new Vector3(0, _fieldInfo.castle.floor - 1);
